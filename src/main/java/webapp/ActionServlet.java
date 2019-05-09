@@ -1,0 +1,175 @@
+package webapp;
+
+/*
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
+ * and open the template in the editor.
+ */
+
+import com.google.gson.*;
+import dao.JpaUtil;
+import java.io.IOException;
+import java.io.PrintWriter;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import javax.servlet.ServletException;
+import javax.servlet.annotation.WebServlet;
+import javax.servlet.http.HttpServlet;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
+import metier.modele.Client;
+import metier.service.Service;
+import webapp.action.Action;
+import webapp.action.ListeMediumAction;
+import webapp.serialisation.ListeMediumSerialisation;
+import webapp.serialisation.Serialisation;
+
+/**
+ *
+ * @author mzhang
+ */
+@WebServlet(urlPatterns = {"/ActionServlet"})
+public class ActionServlet extends HttpServlet {
+
+@Override
+  public void init() throws ServletException {
+    super.init();
+    JpaUtil.init();
+  }
+
+  @Override
+  public void destroy() {
+    JpaUtil.destroy();
+    super.destroy();
+  }
+    /**
+     * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
+     * methods.
+     *
+     * @param request servlet request
+     * @param response servlet response
+     * @throws ServletException if a servlet-specific error occurs
+     * @throws IOException if an I/O error occurs
+     */
+  
+    protected void processRequest(HttpServletRequest request, HttpServletResponse response)
+            throws ServletException, IOException {
+        
+        HttpSession session=request.getSession(true);
+        request.setCharacterEncoding("UTF-8");
+        String todo = request.getParameter("todo");
+        
+            if ("connecter".equals(todo)){
+                
+                String login = request.getParameter("login");
+                String password = request.getParameter("password");
+                
+                session.setAttribute("utlisateur", login);
+                response.setContentType("text/html;charset=UTF-8");
+        
+                PrintWriter out = response.getWriter();
+                
+                
+                Client clientActu = Service.trouverClient(login,password);
+                if(clientActu != null)
+                {
+                   out.println("{\"connexion\":true,\"message\":\"Ok\"}");
+                }
+                else
+                {
+                    response.sendError(403,"Client inexistant");
+                }
+            }else if ("inscrire".equals(todo)){
+
+                 String civ = request.getParameter("civilite");
+                 String nom = request.getParameter("nom");
+                 String prenom = request.getParameter("prenom");
+                 String datenaiss =  request.getParameter("naissance");
+                 SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
+                 Date date = new Date();
+                try {
+                    date = sdf.parse(datenaiss);
+                } catch (ParseException ex) {
+                    System.out.println("Erreur date de naissance");
+                }
+                String adresse =  request.getParameter("adresse");
+                String code =  request.getParameter("code");
+                String ville =  request.getParameter("ville");
+                String adressecomplete = adresse+" "+code+" "+ville;
+                String numtel = request.getParameter("tel");
+                String email = request.getParameter("mail");
+                String mdp = request.getParameter("mdp");
+                String mdpconf = request.getParameter("mdpconf");
+                String cgu = request.getParameter("cgu");
+                
+                PrintWriter out = response.getWriter();
+                
+                if(mdp.equals(mdpconf) && cgu.equals("true")){
+                    Client nouveau = new Client(civ,nom,prenom,date,adressecomplete,numtel,email,mdp);
+                    if(Service.inscrireClient(nouveau))
+                    {
+                        out.println("{\"inscription\":true,\"message\":\"Ok\"}");
+                    }
+                }
+            
+            }else{
+                String user=(String)session.getAttribute("utlisateur");
+                if(user==null){
+                    response.sendError(403,"Forbidden(No User)");
+                }else{
+                    Action action = null;
+                    Serialisation serialisation = null;
+                    
+                    switch(todo){
+                        case "voyance":
+                            action = new ListeMediumAction();
+                            serialisation = new ListeMediumSerialisation();
+                            break;
+                    }
+                }
+            }
+    }   
+    
+
+    // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
+    /**
+     * Handles the HTTP <code>GET</code> method.
+     *
+     * @param request servlet request
+     * @param response servlet response
+     * @throws ServletException if a servlet-specific error occurs
+     * @throws IOException if an I/O error occurs
+     */
+    @Override
+    protected void doGet(HttpServletRequest request, HttpServletResponse response)
+            throws ServletException, IOException {
+        processRequest(request, response);
+    }
+
+    /**
+     * Handles the HTTP <code>POST</code> method.
+     *
+     * @param request servlet request
+     * @param response servlet response
+     * @throws ServletException if a servlet-specific error occurs
+     * @throws IOException if an I/O error occurs
+     */
+    @Override
+    protected void doPost(HttpServletRequest request, HttpServletResponse response)
+            throws ServletException, IOException {
+        processRequest(request, response);
+    }
+
+    /**
+     * Returns a short description of the servlet.
+     *
+     * @return a String containing servlet description
+     */
+    @Override
+    public String getServletInfo() {
+        return "Short description";
+    }// </editor-fold>
+
+}
