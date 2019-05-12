@@ -79,7 +79,7 @@ public class ActionServlet extends HttpServlet {
                 }
                 else
                 {
-                    response.sendError(403,"Client inexistant");
+                    out.println("{\"connexion\":false,\"message\":\"Pas de Client\"}");
                 }
             }else if ("inscrire".equals(todo)){
 
@@ -106,13 +106,25 @@ public class ActionServlet extends HttpServlet {
                 
                 PrintWriter out = response.getWriter();
                 
-                if(mdp.equals(mdpconf) && cgu.equals("true")){
+                if(!mdp.equals(mdpconf) )
+                {
+                    out.println("{\"inscription\":false,\"message\":\"Mdp différents\"}");
+                }
+                else if(!cgu.equals("true")){
+                    out.println("{\"inscription\":false,\"message\":\"Veuillez accepter les cgu\"}");
+                }
+                else{
                     Client nouveau = new Client(civ,nom,prenom,date,adressecomplete,numtel,email,mdp);
                     if(Service.inscrireClient(nouveau))
                     {
                         out.println("{\"inscription\":true,\"message\":\"Ok\"}");
                     }
+                    else
+                    {
+                        out.println("{\"inscription\":false,\"message\":\"Erreur lors de l'inscription\"}");
+                    }
                 }
+                
             
             }else{
                 String user=(String)session.getAttribute("utlisateur");
@@ -126,6 +138,7 @@ public class ActionServlet extends HttpServlet {
                         case "voyance":
                             action = new ListeMediumAction();
                             serialisation = new ListeMediumSerialisation();
+                            
                             break;
                     }
                 }
