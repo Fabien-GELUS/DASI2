@@ -13,6 +13,7 @@ import java.io.PrintWriter;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.HashSet;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -22,7 +23,11 @@ import javax.servlet.http.HttpSession;
 import metier.modele.Client;
 import metier.service.Service;
 import webapp.action.Action;
+import webapp.action.ChoisirVoyanceAction;
+import webapp.action.ListeDemandeAction;
 import webapp.action.ListeMediumAction;
+import webapp.serialisation.ChoisirVoyanceSerialisation;
+import webapp.serialisation.ListeDemandeSerialisation;
 import webapp.serialisation.ListeMediumSerialisation;
 import webapp.serialisation.Serialisation;
 
@@ -60,22 +65,25 @@ public class ActionServlet extends HttpServlet {
         HttpSession session=request.getSession(true);
         request.setCharacterEncoding("UTF-8");
         String todo = request.getParameter("todo");
-        
+        System.out.println(todo);
             if ("connecter".equals(todo)){
+                
                 
                 String login = request.getParameter("login");
                 String password = request.getParameter("password");
                 
-                session.setAttribute("utlisateur", login);
+                session.setAttribute("utilisateur", login);
                 response.setContentType("text/html;charset=UTF-8");
         
                 PrintWriter out = response.getWriter();
                 
                 
                 Client clientActu = Service.trouverClient(login,password);
+               
                 if(clientActu != null)
                 {
                    out.println("{\"connexion\":true,\"message\":\"Ok\"}");
+                   session.setAttribute("idClient", clientActu.getId());
                 }
                 else
                 {
@@ -127,20 +135,53 @@ public class ActionServlet extends HttpServlet {
                 
             
             }else{
-                String user=(String)session.getAttribute("utlisateur");
+                String user=(String) session.getAttribute("utilisateur");
+                System.out.println("user :"+user);
                 if(user==null){
-                    response.sendError(403,"Forbidden(No User)");
+                    System.out.println("Forbidden(No User)");
                 }else{
                     Action action = null;
                     Serialisation serialisation = null;
-                    
+                    Long id;
+                    System.out.println("switch");
                     switch(todo){
                         case "voyance":
+                            System.out.println("dans voyance");
                             action = new ListeMediumAction();
                             serialisation = new ListeMediumSerialisation();
                             
                             break;
+                        case "choisirVoyance":
+                            System.out.println("dans choisirVoyance");
+                            id =(Long) session.getAttribute("idClient");
+                            request.setAttribute("idClient",id);
+                            action = new ChoisirVoyanceAction();
+                            serialisation = new ChoisirVoyanceSerialisation();
+                            break;
+                        case "historique" :
+                            System.out.println("dans choisirVoyance");
+                            id =(Long)  session.getAttribute("idClient");
+                            request.setAttribute("idClient",id);
+                            action = new ListeDemandeAction();
+                            serialisation = new ListeDemandeSerialisation();
+                            break;
+                        case "deconnexion":
+                            session.setAttribute("utilisateur", null);
+                            PrintWriter out = response.getWriter();
+                            out.println("{\"deconnexion\":\"ok\"}");
+                            break;
                     }
+                    
+                    if(action==null){
+                        response.sendError(400,"Bad Request (Wrong TODO Parameter)");
+                        
+                    }else{
+                        boolean actionStatus = action.executer(request);
+                        if(serialisation!=null){
+                            serialisation.serialiser(request,response);
+                        }
+                    }
+                    
                 }
             }
     }   

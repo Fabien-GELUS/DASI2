@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<!--
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+-->
+<html>
+    <head>
+        <title>Profil Astrologique</title>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
+    </head>
+    <body>
+        <h1>Profil astrologique</h1>
+        
+        <div> Signe du Zodiaque </div>
+        <div id="zodiaque">...</div>
+        
+        <div> Signe Chinois </div>
+        <div id="chinois">...</div>
+        
+        <div> Couleur porte-bonheur </div>
+        <div id="couleur">...</div>
+        
+        <div> Animal-totem </div>
+        <div id="animal">...</div>
+        
+        <script>
+            function initialisation() {
+
+                // Requête AJAX
+                $.ajax({
+
+                    url: './ActionServlet', // URL
+                    method: 'POST',         // Méthode
+                    data: {// Paramètres
+                        todo: 'profil'
+                    },
+                    //dataType: 'json'        // Type de retour attendu
+
+                }).done(function (response) {  // Appel OK => "response" contient le resultat JSON
+                    // ici votre code...
+                    console.log(response);
+                    $('#zodiaque').html(response.signeZodiaque);
+                    $('#chinois').html(response.signeChinois);
+                    $('#couleur').html(response.couleur);
+                    $('#animal').html(response.animal);
+                    
+
+                }).fail(function (error) { // Appel KO => erreur a gérer
+                    
+                    // Popup avec message d'erreur :
+                    alert('Erreur lors de l\'appel: HTTP Code ' + error.status + ' ~ ' + error.statusText + ' ~ ' + error.getResponseHeader('Content-Type'));
+                });
+                
+                
+            }
+            
+            $(document).ready(function () {
+
+                console.log('Page chargee => Debut du Script');
+
+                // ajout d'un "handler" sur le clic du bouton de connexio
+                initialisation();
+
+                
+            });
+        </script>
+    </body>
+</html>

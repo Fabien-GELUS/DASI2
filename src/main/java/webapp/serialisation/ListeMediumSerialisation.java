@@ -29,10 +29,10 @@ public class ListeMediumSerialisation extends Serialisation {
     public void serialiser(HttpServletRequest request, HttpServletResponse response) throws IOException {
         JsonObject jsonContainer=new JsonObject();
         JsonArray jsonArrayMediums=new JsonArray();
-        //List<Medium> mediums=(List<Medium>)request.getAttribute("mediums");
-        List<Medium> mediums=trouverTousLesMedium();
+        List<Medium> mediums=(List<Medium>)request.getAttribute("mediums");
         for(Medium medium:mediums){
             JsonObject jsonMedium=new JsonObject();
+            jsonMedium.addProperty("id",medium.getId());
             jsonMedium.addProperty("nom", medium.getNom());
             jsonMedium.addProperty("descriptif", medium.getDescriptif());
             jsonMedium.addProperty("type", medium.getType());

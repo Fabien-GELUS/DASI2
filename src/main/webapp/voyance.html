@@ -6,14 +6,20 @@ and open the template in the editor.
 -->
 <html>
     <head>
-        <title>TODO supply a title</title>
+        <title>POSITIF</title>
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
     </head>
     <body>
+        <nav>
+            <a href="#">Voyance</a>
+            <a href="historique.html">Historique</a>
+            <a href="profil.html">Profil</a>
+            <a href="index.html" id="link-deconnexion">Deconnexion</a>
+        </nav>
+        <h1>Choisissez votre medium et decouvrez votre avenir...</h1>
         <ul id="liste-voyances">
-            <li>blabal</li>
         </ul>
         <script>
             function initialisation() {
@@ -22,7 +28,7 @@ and open the template in the editor.
                 $.ajax({
 
                     url: './ActionServlet', // URL
-                    method: 'POST',         // Méthode
+                    method: 'POST', // Méthode
                     data: {// Paramètres
                         todo: 'voyance'
                     },
@@ -30,43 +36,106 @@ and open the template in the editor.
 
                 }).done(function (response) {  // Appel OK => "response" contient le resultat JSON
                     // ici votre code...
-                    console.log(response);
-                    console.log("ici");
+                    console.log("initialisation");
                     $("#liste-voyances").empty();
-                    $.each(response.mediums,function(i,medium){
-                        $("#liste-voyances").append(
-                                '<li><div id="medium"><p>'+medium.nom+'<\p><p>'+medium.type+' '+medium.specialite+' '+medium.formation+' '+medium.promotion+'</p><p>'+medium.descriptif+'</p></div></li>');
+                    $.each(response.mediums, function (i, medium) {
+                        if (!medium.type.localeCompare("Voyant")) {
+                            $("#liste-voyances").append(
+                                    '<li><div class="medium"><p>' + medium.nom + '</p><p>' + '○ ' + medium.type + ' ■ Spécialité: ' + medium.specialite);
+                        } else if (!medium.type.localeCompare("Astrologue")) {
+                            $("#liste-voyances").append(
+                                    '<li><div class="medium"><p>' + medium.nom + '</p><p>' + '○ ' + medium.type + ' ■ ' + medium.formation + ' ▲ promo ' + medium.promotion);
+                        } else {
+                            $("#liste-voyances").append(
+                                    '<li><div class="medium"><p>' + medium.nom + '</p><p>' + '○ ' + medium.type);
+                        }
+                        $("#liste-voyances").append('</p><p>' + medium.descriptif + '</p></div></li>');
+                        $("#liste-voyances").append('<input value="choisir" class="button-choisir-voyance" type="button" onlick="choisirVoyance()" id="' + medium.id + '" />');
                     });
-                    
-                    /*if (response.connexion) {
-                        $('#message').html('connexion ok');
-                        //window.location = "maPageSuivante.html";
-                    } else {
 
-                        // si connexion pas ok afficher un texte dans la div #message :
-                        $('#message').html('Echec de la connexion');
-                    }*/
+                    /*if (response.connexion) {
+                     $('#message').html('connexion ok');
+                     //window.location = "maPageSuivante.html";
+                     } else {
+                     
+                     // si connexion pas ok afficher un texte dans la div #message :
+                     $('#message').html('Echec de la connexion');
+                     }*/
 
                 }).fail(function (error) { // Appel KO => erreur a gérer
-                    
+
                     // Popup avec message d'erreur :
                     alert('Erreur lors de l\'appel: HTTP Code ' + error.status + ' ~ ' + error.statusText + ' ~ ' + error.getResponseHeader('Content-Type'));
                     // Message d'erreur dans la div #message :
                     $('#message').html('Erreur lors de l\'appel: HTTP Code ' + error.status + ' ~ ' + error.statusText + ' ~ ' + error.getResponseHeader('Content-Type'));
 
                 });
-                
-                
+
+
             }
-            
+
+            function choisirVoyance(id) {
+                //var idMedium=
+                //requête AJAX
+                $.ajax({
+                    url: './ActionServlet', // URL
+                    method: 'POST', // Méthode
+
+                    data: {// Paramètres
+                        todo: 'choisirVoyance',
+                        idMedium: id
+                    },
+                }).done(function (response) {
+                    alert(response.messageRenvoye);
+                    console.log('functin choisir voyance ok');
+                }).fail(function (error) {
+                    alert('Erreur lors de l\'appel: HTTP Code ' + error.status + ' ~ ' + error.statusText + ' ~ ' + error.getResponseHeader('Content-Type'));
+                    // Message d'erreur dans la div #message :
+                    $('#message').html('Erreur lors de l\'appel: HTTP Code ' + error.status + ' ~ ' + error.statusText + ' ~ ' + error.getResponseHeader('Content-Type'));
+
+                });
+            }
+            function deconnexion() {
+                $.ajax({
+                    url: './ActionServlet', // URL
+                    method: 'POST', // Méthode
+
+                    data: {// Paramètres
+                        todo: 'deconnexion',
+                    },
+                }).done(function (response) {
+                    console.log('functin deconnexion ok');
+                }).fail(function (error) {
+                    alert('Erreur lors de l\'appel: HTTP Code ' + error.status + ' ~ ' + error.statusText + ' ~ ' + error.getResponseHeader('Content-Type'));
+                    // Message d'erreur dans la div #message :
+                    $('#message').html('Erreur lors de l\'appel: HTTP Code ' + error.status + ' ~ ' + error.statusText + ' ~ ' + error.getResponseHeader('Content-Type'));
+
+                });
+            }
             $(document).ready(function () {
 
                 console.log('Page chargee => Debut du Script');
 
                 // ajout d'un "handler" sur le clic du bouton de connexio
                 initialisation();
+                console.log('Page chargee => Fin du Script');
+                $(document).on('click', '.button-choisir-voyance', function () {
+                    //alert("button clicked"+event.srcElement.id);
+                    choisirVoyance(event.srcElement.id);
 
-                
+                    // what you want to happen when mouseover and mouseout 
+                    // occurs on elements that match '.dosomething'
+                });
+                $('#link-deconnexion').on('click', function () {
+
+                    // affichage pour debugage dans la console javascript du navigateur
+                    console.log('Click sur le bouton "S\'inscrire"');
+
+                    // appel de la fonction connexion
+                    deconnexion();
+
+                });
+                console.log("here");
             });
         </script>
     </body>

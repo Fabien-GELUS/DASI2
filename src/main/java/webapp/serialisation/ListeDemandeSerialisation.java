@@ -24,7 +24,7 @@ import metier.modele.DemandeDeVoyance;
  * @author fgelus
  */
 public class ListeDemandeSerialisation extends Serialisation {
-    private final static SimpleDateFormat HORODATE_FORMAT = new SimpleDateFormat("dd/MM/yyyy à HH:mm:ss");
+    private final static SimpleDateFormat HORODATE_FORMAT = new SimpleDateFormat("dd/MM/yyyy"); // à HH:mm:ss
     
     @Override
     public void serialiser(HttpServletRequest request, HttpServletResponse response) throws IOException {
@@ -34,9 +34,11 @@ public class ListeDemandeSerialisation extends Serialisation {
         for(DemandeDeVoyance demande:demandes){
             JsonObject jsonDemande=new JsonObject();
             jsonDemande.addProperty("datedebut", HORODATE_FORMAT.format(demande.getDate_demande()));
+            
             jsonDemande.addProperty("statut", demande.getAccepte());
             jsonDemande.addProperty("nom", demande.getMedium().getNom());
-            if(demande.getAccepte()){
+            Date datefin = demande.getDate_fin();
+            if(datefin!=null){
                 jsonDemande.addProperty("datefin", HORODATE_FORMAT.format(demande.getDate_fin()));
             }
             jsonArrayDemandes.add(jsonDemande);

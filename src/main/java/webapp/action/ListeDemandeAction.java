@@ -20,7 +20,7 @@ public class ListeDemandeAction extends Action{
     @Override
     public boolean executer(HttpServletRequest request) {
        
-        long id = Long.parseLong((String)request.getAttribute("idClient"));
+        long id = (Long) request.getAttribute("idClient");
         List<DemandeDeVoyance> demandes = Service.getHistoriqueDemandes(Service.trouverClient(id));
         request.setAttribute("demandes",demandes);
         return true;

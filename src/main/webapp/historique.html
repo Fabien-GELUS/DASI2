@@ -12,6 +12,12 @@ and open the template in the editor.
         <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
     </head>
     <body>
+        <nav>
+            <a href="voyance.html">Voyance</a>
+            <a href="#">Historique</a>
+            <a href="profil.html">Profil</a>
+            <a href="index.html" id="link-deconnexion">Deconnexion</a>
+        </nav>
         <ul id="liste-demandes">
             <li>vide</li>
         </ul>
@@ -30,7 +36,7 @@ and open the template in the editor.
 
                 }).done(function (response) {  // Appel OK => "response" contient le resultat JSON
                     // ici votre code...
-                    console.log(response);
+                     console.log(response);
                     $("#liste-demandes").empty();
                     $.each(response.demandes,function(i,demande){
                         $("#liste-demandes").append(
@@ -48,30 +54,50 @@ and open the template in the editor.
                         }
                         $("#liste-demandes").append( 
                             '</div></li>');
-                        
-                        
-        
-       'Fin échange: '+demande.datefin+'</p></div></li>');
-                    });
-                    
+                });
 
                 }).fail(function (error) { // Appel KO => erreur a gérer
                     
                     // Popup avec message d'erreur :
                     alert('Erreur lors de l\'appel: HTTP Code ' + error.status + ' ~ ' + error.statusText + ' ~ ' + error.getResponseHeader('Content-Type'));
+                   
 
                 });
                 
                 
             }
-            
+                        function deconnexion() {
+                $.ajax({
+                    url: './ActionServlet', // URL
+                    method: 'POST', // Méthode
+
+                    data: {// Paramètres
+                        todo: 'deconnexion',
+                    },
+                }).done(function (response) {
+                    console.log('functin deconnexion ok');
+                }).fail(function (error) {
+                    alert('Erreur lors de l\'appel: HTTP Code ' + error.status + ' ~ ' + error.statusText + ' ~ ' + error.getResponseHeader('Content-Type'));
+                    // Message d'erreur dans la div #message :
+                    $('#message').html('Erreur lors de l\'appel: HTTP Code ' + error.status + ' ~ ' + error.statusText + ' ~ ' + error.getResponseHeader('Content-Type'));
+
+                });
+            }
             $(document).ready(function () {
 
                 console.log('Page chargee => Debut du Script');
 
                 // ajout d'un "handler" sur le clic du bouton de connexio
                 initialisation();
+                $('#link-deconnexion').on('click', function () {
 
+                    // affichage pour debugage dans la console javascript du navigateur
+                    console.log('Click sur le bouton "S\'inscrire"');
+
+                    // appel de la fonction connexion
+                    deconnexion();
+
+                });
                 
             });
         </script>
