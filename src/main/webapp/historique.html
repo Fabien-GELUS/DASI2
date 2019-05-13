@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<!--
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+-->
+<html>
+    <head>
+        <title>Historique</title>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
+    </head>
+    <body>
+        <ul id="liste-demandes">
+            <li>vide</li>
+        </ul>
+        <script>
+            function initialisation() {
+
+                // Requête AJAX
+                $.ajax({
+
+                    url: './ActionServlet', // URL
+                    method: 'POST',         // Méthode
+                    data: {// Paramètres
+                        todo: 'historique'
+                    },
+                    //dataType: 'json'        // Type de retour attendu
+
+                }).done(function (response) {  // Appel OK => "response" contient le resultat JSON
+                    // ici votre code...
+                    console.log(response);
+                    $("#liste-demandes").empty();
+                    $.each(response.demandes,function(i,demande){
+                        $("#liste-demandes").append(
+                                '<li><div id="medium"><p>'+demande.datedebut+'</p><p>'+demande.nom+'</p><p>'+demande.statut+'</p><p>'+'Fin échange: '+demande.datefin+'</p></div></li>');
+                    });
+                    
+
+                }).fail(function (error) { // Appel KO => erreur a gérer
+                    
+                    // Popup avec message d'erreur :
+                    alert('Erreur lors de l\'appel: HTTP Code ' + error.status + ' ~ ' + error.statusText + ' ~ ' + error.getResponseHeader('Content-Type'));
+                    // Message d'erreur dans la div #message :
+                    $('#message').html('Erreur lors de l\'appel: HTTP Code ' + error.status + ' ~ ' + error.statusText + ' ~ ' + error.getResponseHeader('Content-Type'));
+
+                });
+                
+                
+            }
+            
+            $(document).ready(function () {
+
+                console.log('Page chargee => Debut du Script');
+
+                // ajout d'un "handler" sur le clic du bouton de connexio
+                initialisation();
+
+                
+            });
+        </script>
+    </body>
+</html>
