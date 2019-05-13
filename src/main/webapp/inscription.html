@@ -4,7 +4,6 @@ To change this license header, choose License Headers in Project Properties.
 To change this template file, choose Tools | Templates
 and open the template in the editor.
 -->
-<!DOCTYPE html>
 <html>
     <head>
         <title>Inscription</title>
@@ -67,6 +66,9 @@ and open the template in the editor.
         <div>
             <button id="valider">Valider</button> 
         </div>
+        
+        <div id="message">...</div>
+        
         <script>
 
             function inscription() {
@@ -89,7 +91,7 @@ and open the template in the editor.
                var champCgu=($("#cgu").is(':checked')) //true ou false
              
                 // Message d'information dans la div #message :
-                $('#message').html('Connexion en cours...');
+                $('#message').html('Inscription en cours...');
 
                 // Requête AJAX
                 $.ajax({
@@ -115,14 +117,14 @@ and open the template in the editor.
 
                 }).done( function (response) {  // Appel OK => "response" contient le resultat JSON
 
-                    // ici votre code...
-                    // 
-                    console.log(response);
-                    // si connexion ok, aller sur la page suivante :
-                    $('#message').html('connexion ok');
-                    //window.location = "maPageSuivante.html";
-                    // si connexion pas ok afficher un texte dans la div #message :
-                    $('#message').html('Echec de la connexion');
+                    if(response.inscription){
+                        $('#message').html('Inscription '+response.message);
+                        
+                    }else{
+                    
+                        // si connexion pas ok afficher un texte dans la div #message :
+                        $('#message').html('Echec de l\'inscription : '+response.message);
+                    }
 
                 }).fail( function (error) { // Appel KO => erreur a gérer
                     

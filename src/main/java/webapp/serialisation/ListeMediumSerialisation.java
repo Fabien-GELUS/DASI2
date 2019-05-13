@@ -46,7 +46,7 @@ public class ListeMediumSerialisation extends Serialisation {
             
         }
         jsonContainer.add("mediums",jsonArrayMediums);
-        PrintWriter out=response.getWriter();
+        PrintWriter out=getWriterWithJsonHeader(response);
         Gson gson=new GsonBuilder().setPrettyPrinting().create();
         //gson.toJson(jsonContainer,out);  
         String json=gson.toJson(jsonContainer);

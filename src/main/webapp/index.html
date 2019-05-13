@@ -59,16 +59,14 @@ and open the template in the editor.
 
                 }).done( function (response) {  // Appel OK => "response" contient le resultat JSON
 
-                    // ici votre code...
-                    // 
-                    window.location = "voyance.html";
                     if(response.connexion){
-                        $('#message').html('connexion ok');
+                        $('#message').html('connexion '+response.message);
+                        window.location = "voyance.html";
                         
                     }else{
                     
                         // si connexion pas ok afficher un texte dans la div #message :
-                        $('#message').html('Echec de la connexion');
+                        $('#message').html('Echec de la connexion : '+response.message);
                     }
 
                 }).fail( function (error) { // Appel KO => erreur a gérer
