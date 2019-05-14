@@ -5,24 +5,25 @@
  */
 package webapp.action;
 
-import java.util.List;
+
 import javax.servlet.http.HttpServletRequest;
-import metier.modele.Medium;
+import metier.modele.Client;
 import metier.service.Service;
 
 /**
  *
  * @author fgelus
  */
-public class ListeMediumAction extends Action{
+public class ProfilAction extends Action{
 
     @Override
     public boolean executer(HttpServletRequest request) {
-
-        List<Medium> mediums = Service.trouverTousLesMedium();
-        request.setAttribute("mediums", mediums);
         
-        System.out.println("mediums = "+mediums);
+        Long idClient=(Long)request.getAttribute("idClient");
+        Client c=Service.trouverClient(idClient);
+        
+        request.setAttribute("client", c);
+        
         return true;
         
     }

@@ -26,9 +26,11 @@ import webapp.action.Action;
 import webapp.action.ChoisirVoyanceAction;
 import webapp.action.ListeDemandeAction;
 import webapp.action.ListeMediumAction;
+import webapp.action.ProfilAction;
 import webapp.serialisation.ChoisirVoyanceSerialisation;
 import webapp.serialisation.ListeDemandeSerialisation;
 import webapp.serialisation.ListeMediumSerialisation;
+import webapp.serialisation.ProfilSerialisation;
 import webapp.serialisation.Serialisation;
 
 /**
@@ -158,7 +160,7 @@ public class ActionServlet extends HttpServlet {
                             action = new ChoisirVoyanceAction();
                             serialisation = new ChoisirVoyanceSerialisation();
                             break;
-                        case "historique" :
+                        case "historique":
                             System.out.println("dans choisirVoyance");
                             id =(Long)  session.getAttribute("idClient");
                             request.setAttribute("idClient",id);
@@ -170,6 +172,14 @@ public class ActionServlet extends HttpServlet {
                             PrintWriter out = response.getWriter();
                             out.println("{\"deconnexion\":\"ok\"}");
                             break;
+                        case "profil":
+                            System.out.println("dans choisirVoyance");
+                            id =(Long)  session.getAttribute("idClient");
+                            request.setAttribute("idClient",id);
+                            action = new ProfilAction();
+                            serialisation = new ProfilSerialisation();
+                            break;
+                            
                     }
                     
                     if(action==null){
