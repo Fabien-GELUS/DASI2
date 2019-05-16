@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<!--
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+-->
+<html>
+    <head>
+        <title>POSITIF</title>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
+    </head>
+    <body>
+        <nav>
+            <a href="voyanceencours.html">Client Actuel</a>
+            <a href="#">Tableau de bord</a>
+            <a href="index.html" id="link-deconnexion">Deconnexion</a>
+        </nav>
+        <h1>Tableau de bord</h1>
+        <ul id="diagrammes">
+        </ul>
+        <script>
+            function initialisation() {
+
+                // Requête AJAX
+                $.ajax({
+
+                    url: './ActionServlet', // URL
+                    method: 'POST', // Méthode
+                    data: {// Paramètres
+                        todo: 'tableaudebord'
+                    },
+                    //dataType: 'json'        // Type de retour attendu
+
+                }).done(function (response) {  // Appel OK => "response" contient le resultat JSON
+                    // ici votre code...
+                    console.log("initialisation");
+                    console.log(response);
+                    $("#diagrammes").empty();
+                    $.each(response.mediums, function (i, medium) {
+                        $("#diagrammes").append('<li><div class="medium"><p>' + medium.nom + '</p><p>');
+                        $("#diagrammes").append('</p><p>' + medium.nombrevoyance+ '</p></div></li>');
+                    });
+                    $.each(response.employes, function (i, employe) {
+                        $("#diagrammes").append('<li><div class="medium"><p>' + employe.nom + '</p><p>');
+                        $("#diagrammes").append('</p><p>' + employe.nombreclient+ '</p></div></li>');
+                    });
+
+                }).fail(function (error) { // Appel KO => erreur a gérer
+                    // Popup avec message d'erreur :
+                    alert('Erreur lors de l\'appel: HTTP Code ' + error.status + ' ~ ' + error.statusText + ' ~ ' + error.getResponseHeader('Content-Type'));
+                    // Message d'erreur dans la div #message :
+                    $('#message').html('Erreur lors de l\'appel: HTTP Code ' + error.status + ' ~ ' + error.statusText + ' ~ ' + error.getResponseHeader('Content-Type'));
+                });
+
+
+            }
+
+
+            function deconnexion() {
+                $.ajax({
+                    url: './ActionServlet', // URL
+                    method: 'POST', // Méthode
+
+                    data: {// Paramètres
+                        todo: 'deconnexion',
+                    },
+                }).done(function (response) {
+                    console.log('functin deconnexion ok');
+                }).fail(function (error) {
+                    alert('Erreur lors de l\'appel: HTTP Code ' + error.status + ' ~ ' + error.statusText + ' ~ ' + error.getResponseHeader('Content-Type'));
+                    // Message d'erreur dans la div #message :
+                    $('#message').html('Erreur lors de l\'appel: HTTP Code ' + error.status + ' ~ ' + error.statusText + ' ~ ' + error.getResponseHeader('Content-Type'));
+
+                });
+            }
+            $(document).ready(function () {
+
+                console.log('Page chargee => Debut du Script');
+
+                // ajout d'un "handler" sur le clic du bouton de connexio
+                initialisation();
+                console.log('Page chargee => Fin du Script');
+
+                $('#link-deconnexion').on('click', function () {
+
+                    // affichage pour debugage dans la console javascript du navigateur
+                    console.log('Click sur le bouton "S\'inscrire"');
+
+                    // appel de la fonction connexion
+                    deconnexion();
+
+                });
+
+            });
+        </script>
+    </body>
+</html>
