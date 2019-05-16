@@ -6,14 +6,12 @@ package webapp;
  * and open the template in the editor.
  */
 
-import com.google.gson.*;
 import dao.JpaUtil;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
-import java.util.HashSet;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -21,6 +19,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import metier.modele.Client;
+import metier.modele.Employe;
 import metier.service.Service;
 import webapp.action.Action;
 import webapp.action.ChoisirVoyanceAction;
@@ -68,7 +67,7 @@ public class ActionServlet extends HttpServlet {
         request.setCharacterEncoding("UTF-8");
         String todo = request.getParameter("todo");
         System.out.println(todo);
-            if ("connecter".equals(todo)){
+            if ("connecterclient".equals(todo)){
                 
                 
                 String login = request.getParameter("login");
@@ -90,6 +89,28 @@ public class ActionServlet extends HttpServlet {
                 else
                 {
                     out.println("{\"connexion\":false,\"message\":\"Pas de Client\"}");
+                }
+            }else if ("connecteremploye".equals(todo)){
+
+                String login = request.getParameter("login");
+                String password = request.getParameter("password");
+                
+                session.setAttribute("utilisateur", login);
+                response.setContentType("text/html;charset=UTF-8");
+        
+                PrintWriter out = response.getWriter();
+                
+                
+                Employe employeActu = Service.trouverEmploye(login,password);
+               
+                if(employeActu != null)
+                {
+                   out.println("{\"connexion\":true,\"message\":\"Ok\"}");
+                   session.setAttribute("idEmploye", employeActu.getId());
+                }
+                else
+                {
+                    out.println("{\"connexion\":false,\"message\":\"Pas d'Employe\"}");
                 }
             }else if ("inscrire".equals(todo)){
 
