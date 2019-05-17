@@ -23,16 +23,22 @@ import metier.modele.Employe;
 import metier.service.Service;
 import webapp.action.Action;
 import webapp.action.ChoisirVoyanceAction;
+import webapp.action.ClientActuelAction;
+import webapp.action.CommencerSeanceAction;
 import webapp.action.ListeDemandeAction;
 import webapp.action.ListeMediumAction;
 import webapp.action.ProfilAction;
 import webapp.action.TableauDeBordAction;
+import webapp.action.TerminerSeanceAction;
 import webapp.serialisation.ChoisirVoyanceSerialisation;
+import webapp.serialisation.ClientActuelSerialisation;
+import webapp.serialisation.CommencerSeanceSerialisation;
 import webapp.serialisation.ListeDemandeSerialisation;
 import webapp.serialisation.ListeMediumSerialisation;
 import webapp.serialisation.ProfilSerialisation;
 import webapp.serialisation.Serialisation;
 import webapp.serialisation.TableauDeBordSerialisation;
+import webapp.serialisation.TerminerSeanceSerialisation;
 
 /**
  *
@@ -168,6 +174,7 @@ public class ActionServlet extends HttpServlet {
                     Action action = null;
                     Serialisation serialisation = null;
                     Long id;
+                    System.out.println("switch");
                     switch(todo){
                         case "voyance":
                             System.out.println("dans voyance");
@@ -183,6 +190,7 @@ public class ActionServlet extends HttpServlet {
                             serialisation = new ChoisirVoyanceSerialisation();
                             break;
                         case "historique":
+                            System.out.println("dans choisirVoyance");
                             id =(Long)  session.getAttribute("idClient");
                             request.setAttribute("idClient",id);
                             action = new ListeDemandeAction();
@@ -194,6 +202,7 @@ public class ActionServlet extends HttpServlet {
                             out.println("{\"deconnexion\":\"ok\"}");
                             break;
                         case "profil":
+                            System.out.println("dans choisirVoyance");
                             id =(Long)  session.getAttribute("idClient");
                             request.setAttribute("idClient",id);
                             action = new ProfilAction();
@@ -201,13 +210,29 @@ public class ActionServlet extends HttpServlet {
                             break;
                         case "tableaudebord":
                             System.out.println("dans tdb");
-                            id =(Long)  session.getAttribute("idEmploye");
-                            request.setAttribute("idEmploye",id);
                             action = new TableauDeBordAction();
                             serialisation = new TableauDeBordSerialisation();
                             break;
-                            
-                            
+                        case "clientactuel":
+                            id =(Long)  session.getAttribute("idEmploye");
+                            request.setAttribute("idEmploye",id);
+                            action = new ClientActuelAction();
+                            serialisation = new ClientActuelSerialisation();
+                            break;
+                        case "commencer":
+                            System.out.println("todo : commencer");
+                            id=(Long) session.getAttribute("idEmploye");
+                            request.setAttribute("idEmploye",id);
+                            action=new CommencerSeanceAction();
+                            serialisation=new CommencerSeanceSerialisation();
+                            break;
+                        case "terminer":
+                            System.out.println("todo : terminer");
+                            id=(Long) session.getAttribute("idEmploye");
+                            request.setAttribute("idEmploye",id);
+                            action=new TerminerSeanceAction();
+                            serialisation=new TerminerSeanceSerialisation();
+                            break;
                     }
                     
                     if(action==null){

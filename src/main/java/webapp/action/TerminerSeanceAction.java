@@ -5,30 +5,24 @@
  */
 package webapp.action;
 
-
-import java.util.List;
 import javax.servlet.http.HttpServletRequest;
 import metier.modele.DemandeDeVoyance;
 import metier.modele.Employe;
-import metier.modele.Medium;
 import metier.service.Service;
-
 
 /**
  *
  * @author fgelus
  */
-public class TableauDeBordAction extends Action{
+public class TerminerSeanceAction extends Action{
 
     @Override
     public boolean executer(HttpServletRequest request) {
-        
-        List<Medium> mediums = Service.getNBVoyanceParMediumDesc();
-        List<Employe> employes = Service.getNBClientsParEmployeDesc();
-        request.setAttribute("mediums",mediums);
-        request.setAttribute("employes",employes);
+        long id = (Long)request.getAttribute("idEmploye");
+        Employe e = Service.trouverEmploye(id);
+        DemandeDeVoyance demande = Service.chercherDemandeVoyance(e);
+        Service.terminerVoyance(demande);
         return true;
-        
     }
     
 }

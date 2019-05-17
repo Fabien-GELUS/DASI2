@@ -1,0 +1,127 @@
+/*
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+*/
+/* 
+    Created on : 16 mai 2019, 18:45:50
+    Author     : mzhang
+*/
+html,body{
+    margin:0;
+    padding:0;
+    width:100%;
+    height:100%;
+    color:rgba(255,255,255,0.7);
+}
+
+.intro {
+    width:100%;
+    height:100%;
+    margin:auto;
+    background:url(img/background.jpg) no-repeat;
+    display:table;
+    top:0;
+    background-size: cover;
+}
+.intro .inner{
+    display:table-cell;
+    vertical-align: middle;
+    width:100%;
+    max-width: none;
+}
+.content{
+    max-width: 600px;
+    margin:0 auto;
+    text-align:center;
+    padding-bottom: 10%;    
+}
+
+.content h1{
+    font-family: 'Macondo Swash Caps',cursive;
+    font-size: 500%;
+    font-weight:100;
+}
+.connexion{
+    padding:5%;
+    background-color: rgba(255,255,255,0.5);
+    border-radius: 20px;
+}
+.connexion .inputUnit{
+    width:100%;
+    margin-top:5%;
+    margin-bottom:5%;
+    overflow:hidden;
+}
+.connexion .inputUnit input{
+    display:block;
+    width:100%;
+    height:50px;
+    background-color:transparent;
+    border: none;
+    border-bottom: 2px solid #4c187c;
+    font-size:175%;
+    color:#4c187c;
+    letter-spacing: 3px;
+}
+.connexion .inputUnit input::placeholder{
+    color:white;
+    font-size:100%;
+    font-wight:50%;
+}
+.connexion .inputUnit input:focus{
+    background-color:rgba(255,255,255,0.8);
+}
+#champ-login {
+  background-image: url('img/man-user.png');
+  background-position: 10px 10px;
+  background-size: 30px 30px;
+  background-repeat: no-repeat;
+  padding-left: 50px;
+  padding-right: -40px;
+}
+#champ-password {
+  background-image: url('img/lock.png');
+  background-position: 10px 10px;
+  background-size: 30px 30px;
+  background-repeat: no-repeat;
+  padding-left: 50px;
+  padding-right:-40px;
+  margin-right:-40px;
+}
+
+.joli-bouton{
+    background-color:transparent;
+    text-transform: uppercase;
+    border:none;
+    font-family:"Poiret One",cursive;
+    font-size:250%;
+    font-weight:500;
+    color:#4c187c;
+}
+
+.joli-bouton:hover{
+    font-weight:800;
+}
+
+.inscription p{
+   font-family:  "Poiret One",cursive;
+   font-size:250%;
+   color:white;
+   font-weight:800;
+}
+.inscription a{
+    display: block;
+    background-color:rgba(255,255,255,0.7);
+    border-radius:10px;
+    text-decoration: none;
+    margin:0 20%;
+    height:100%;
+    padding:5%;
+    text-transform: uppercase;
+    font-size:250%;
+    font-family: "Poiret One",cursive;
+}
+.inscription a:hover{
+    background-color: rgba(255,255,255,0.8);
+}

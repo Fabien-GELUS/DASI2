@@ -13,7 +13,7 @@ and open the template in the editor.
     </head>
     <body>
         <nav>
-            <a href="voyanceencours.html">Client Actuel</a>
+            <a href="clientactuel.html">Client Actuel</a>
             <a href="#">Tableau de bord</a>
             <a href="index.html" id="link-deconnexion">Deconnexion</a>
         </nav>
@@ -22,17 +22,14 @@ and open the template in the editor.
         </ul>
         <script>
             function initialisation() {
-
                 // Requête AJAX
                 $.ajax({
-
                     url: './ActionServlet', // URL
                     method: 'POST', // Méthode
                     data: {// Paramètres
                         todo: 'tableaudebord'
                     },
                     //dataType: 'json'        // Type de retour attendu
-
                 }).done(function (response) {  // Appel OK => "response" contient le resultat JSON
                     // ici votre code...
                     console.log("initialisation");
@@ -46,23 +43,17 @@ and open the template in the editor.
                         $("#diagrammes").append('<li><div class="medium"><p>' + employe.nom + '</p><p>');
                         $("#diagrammes").append('</p><p>' + employe.nombreclient+ '</p></div></li>');
                     });
-
                 }).fail(function (error) { // Appel KO => erreur a gérer
                     // Popup avec message d'erreur :
                     alert('Erreur lors de l\'appel: HTTP Code ' + error.status + ' ~ ' + error.statusText + ' ~ ' + error.getResponseHeader('Content-Type'));
                     // Message d'erreur dans la div #message :
                     $('#message').html('Erreur lors de l\'appel: HTTP Code ' + error.status + ' ~ ' + error.statusText + ' ~ ' + error.getResponseHeader('Content-Type'));
                 });
-
-
             }
-
-
             function deconnexion() {
                 $.ajax({
                     url: './ActionServlet', // URL
                     method: 'POST', // Méthode
-
                     data: {// Paramètres
                         todo: 'deconnexion',
                     },
@@ -72,27 +63,19 @@ and open the template in the editor.
                     alert('Erreur lors de l\'appel: HTTP Code ' + error.status + ' ~ ' + error.statusText + ' ~ ' + error.getResponseHeader('Content-Type'));
                     // Message d'erreur dans la div #message :
                     $('#message').html('Erreur lors de l\'appel: HTTP Code ' + error.status + ' ~ ' + error.statusText + ' ~ ' + error.getResponseHeader('Content-Type'));
-
                 });
             }
             $(document).ready(function () {
-
                 console.log('Page chargee => Debut du Script');
-
                 // ajout d'un "handler" sur le clic du bouton de connexio
                 initialisation();
                 console.log('Page chargee => Fin du Script');
-
                 $('#link-deconnexion').on('click', function () {
-
                     // affichage pour debugage dans la console javascript du navigateur
                     console.log('Click sur le bouton "S\'inscrire"');
-
                     // appel de la fonction connexion
                     deconnexion();
-
                 });
-
             });
         </script>
     </body>

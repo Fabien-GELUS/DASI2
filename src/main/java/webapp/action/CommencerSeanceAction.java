@@ -5,30 +5,29 @@
  */
 package webapp.action;
 
-
-import java.util.List;
 import javax.servlet.http.HttpServletRequest;
+import metier.modele.Client;
 import metier.modele.DemandeDeVoyance;
 import metier.modele.Employe;
 import metier.modele.Medium;
 import metier.service.Service;
-
+import static metier.service.Service.demanderVoyance;
+import static metier.service.Service.trouverClient;
+import static metier.service.Service.trouverMedium;
 
 /**
  *
  * @author fgelus
  */
-public class TableauDeBordAction extends Action{
+public class CommencerSeanceAction extends Action{
+
 
     @Override
     public boolean executer(HttpServletRequest request) {
-        
-        List<Medium> mediums = Service.getNBVoyanceParMediumDesc();
-        List<Employe> employes = Service.getNBClientsParEmployeDesc();
-        request.setAttribute("mediums",mediums);
-        request.setAttribute("employes",employes);
+        long id = (Long)request.getAttribute("idEmploye");
+        Employe e = Service.trouverEmploye(id);
+        DemandeDeVoyance demande = Service.chercherDemandeVoyance(e);
+        Service.debuterVoyance(demande);
         return true;
-        
     }
-    
 }

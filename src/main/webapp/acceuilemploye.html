@@ -12,25 +12,31 @@ and open the template in the editor.
 
         <!-- Librairie Javascript: jQuery (v3.3.1) -->
         <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
+        <link rel="stylesheet" href="AccueilStyle.css"/>
+        <link href="https://fonts.googleapis.com/css?family=Macondo+Swash+Caps|Poiret+One" rel="stylesheet"> 
 
-        <style>
-            /* Feuille de Style CSS (dans la page) */
-            #message { margin: 25px; padding: 10px; border-radius: 10px; border: 2px solid violet; }
-            button.joli-bouton { padding: 3px 10px; border-radius: 5px; border-width: 3px; cursor: pointer; }
-        </style>
     </head>
     <body>
+       <div class="intro">
+            <div class="inner">
+                <div class="content">
+                    <h1>POSIT'IF</h1>
 
-        <h1>POSIT'IF</h1>
+                    <div class="connexion">
+                        <div class="inputUnit">
+                        <input type="text" id="champ-login" name="login" placeholder="votre identifiant" />
+                        </div>
+                        <div class="inputUnit">
+                        <input type="password" id="champ-password" name="password"  placeholder="votre mot de passe" />
+                        </div>
+                        <button id="bouton-connexion" class="joli-bouton">Se Connecter</button>   
+                    </div>
 
-        <div>
-            Identifiant : <input type="text" id="champ-login" name="login" placeholder="votre identifiant" /><br>
-            Mot de passe : <input type="password" id="champ-password" name="password" /><br>
-            <button id="bouton-connexion" class="joli-bouton">Se Connecter</button>   
+                    <div id="message">...</div>
+                </div>
+            </div>
         </div>
-
-        <div id="message">...</div>
-       
+        
         <script>
 
             function connexion() {
@@ -75,6 +81,9 @@ and open the template in the editor.
                 });
             }
             
+            function inscription(){
+                window.location = "inscription.html";
+            }
 
             $(document).ready(function () {
 
