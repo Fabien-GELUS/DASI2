@@ -48,7 +48,7 @@ and open the template in the editor.
                             $("#liste-demandes").append(
                                 '<p>'+'✗ Medium indisponible'+'</p>');
                         }
-                        if(demande.datefin!=null){
+                        if($.trim(demande.datefin)){ //if datefin is not null
                              $("#liste-demandes").append(
                                 '<p> Fin échange: '+demande.datefin+'</p>');
                         }

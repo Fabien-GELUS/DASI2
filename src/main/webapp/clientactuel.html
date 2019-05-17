@@ -4,11 +4,15 @@ To change this license header, choose License Headers in Project Properties.
 To change this template file, choose Tools | Templates
 and open the template in the editor.
 -->
+
+
 <html>
     <head>
         <title>POSITIF</title>
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link rel="stylesheet" href="ClientActuel.css"/>
+        <link href="https://fonts.googleapis.com/css?family=Macondo+Swash+Caps|Poiret+One" rel="stylesheet"> 
         <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
     </head>
     <body>
@@ -20,6 +24,9 @@ and open the template in the editor.
         
         <div id="content">
         </div>
+        
+       
+        
         <script>
             function initialisation() {
 
@@ -51,13 +58,39 @@ and open the template in the editor.
                         }
                         $("#content").append('</p><p>' + response.medium.descriptif + '</p></div>');
                         $("#content").append(
-                                '<div class="client"><h1>Profil du client</h1><div class="box" id="box1"><ul><li>Civilité:'+response.client.Civilite+'</li><li>Nom:'+response.client.Nom+'</li><li>Prénom:'+response.client.Prenom+'</l1><li>Naissance:'+response.client.Naissance+'</li></ul></div><div class="box" id="box2"><ul><li>Signe du zodiaque:'+response.client.signeZodiaque+'</li><li>Signe chinoise:'+response.client.signeChinoise+'</li><li>Couleur porte-bonheur:'+response.client.couleur+'</li><li>Animal-totem:'+response.client.animal+'</li></ul>');
-                        if(response.etape==1){
-                            $("#content").append('<button class="btn" id="commencer">commencer</button>');
-                        }else if(response.etape==2){
-                            $("#content").append('<button class="btn" id="terminer">terminer</button>');
-                        }else if(response.etape==3){
-                             window.location = "compteRendu.html"
+                                '<div class="client"><h1>Profil du client</h1><div class="box" id="box1"><ul><li>Civilité:'+response.client.Civilite+'</li><li>Nom:'+response.client.Nom+'</li><li>Prénom:'+response.client.Prenom+'</l1><li>Naissance:'+response.client.Naissance+'</li></ul></div><div class="box" id="box2"><ul><li>Signe du zodiaque:'+response.client.signeZodiaque+'</li><li>Signe chinois:'+response.client.signeChinois+'</li><li>Couleur porte-bonheur:'+response.client.couleur+'</li><li>Animal-totem:'+response.client.animal+'</li></ul>');
+                       
+                        $("#content").append(
+                            '<h1>Historique du client</h1><nav><ul id="liste-demandes"></ul></nav>');
+
+                        $.each(response.historique,function(i,demande){
+                        $("#liste-demandes").append(
+                                '<li><div id="demande"><p>'+demande.datedebut+'</p><p>'+demande.nom+'</p>');
+                        if(demande.statut){
+                            $("#liste-demandes").append(
+                                '<p>'+'✓ Demande acceptée'+'</p>');
+                        }else{
+                            $("#liste-demandes").append(
+                                '<p>'+'✗ Medium indisponible'+'</p>');
+                        }
+                        if($.trim(demande.datefin)){ // if not null
+                             $("#liste-demandes").append(
+                                '<p> Fin échange: '+demande.datefin+'</p>');
+                        }
+                        if($.trim(demande.commentaire)){
+                            $("#liste-demandes").append(
+                                    '<p>'+'Commentaire : '+demande.commentaire+'</p>');
+                        }
+                        $("#liste-demandes").append( 
+                            '</div></li>');
+                        });
+                        
+                        if(response.etape===1){
+                            $("#content").append('<button class="btn" id="commencer" onClick="window.location.href=window.location.href">commencer</button>');
+                        }else if(response.etape===2){
+                            $("#content").append('<button class="btn" id="terminer" onClick="window.location.href=window.location.href">terminer</button>');
+                        }else if(response.etape===3){
+                             window.location = "compteRendu.html";
                         }
                     }else if(!response.haveDemande.localeCompare("false")){
                         $("#content").empty();
@@ -66,7 +99,7 @@ and open the template in the editor.
                         );
                         $("#content").append(
                             '<button id="refresh">Rafraichir</button>'
-                        )
+                        );
                 
                     }
                     
@@ -110,12 +143,14 @@ and open the template in the editor.
                     }
                 }).done(function(response){
                     console.log('function terminer ok');
+                    
                 }).fail(function (error) {
                     alert('Erreur lors de l\'appel: HTTP Code ' + error.status + ' ~ ' + error.statusText + ' ~ ' + error.getResponseHeader('Content-Type'));
                     // Message d'erreur dans la div #message :
                     $('#message').html('Erreur lors de l\'appel: HTTP Code ' + error.status + ' ~ ' + error.statusText + ' ~ ' + error.getResponseHeader('Content-Type'));
 
                 });
+               
                 //document.location.reload(true);
             }
             function deconnexion() {
@@ -127,7 +162,7 @@ and open the template in the editor.
                         todo: 'deconnexion'
                     }
                 }).done(function (response) {
-                    console.log('functin deconnexion ok');
+                    console.log('fonction deconnexion ok');
                 }).fail(function (error) {
                     alert('Erreur lors de l\'appel: HTTP Code ' + error.status + ' ~ ' + error.statusText + ' ~ ' + error.getResponseHeader('Content-Type'));
                     // Message d'erreur dans la div #message :
@@ -146,14 +181,15 @@ and open the template in the editor.
                 $('#link-deconnexion').on('click', function () {
 
                     // affichage pour debugage dans la console javascript du navigateur
-                    console.log('Click sur le bouton "S\'inscrire"');
+                    console.log('deconnexion');
 
-                    // appel de la fonction connexion
+                    // appel de la fonction deconnexion
                     deconnexion();
                 });
                 $(document).on('click', '#commencer', function () {
                     commencer();
-                    document.location.reload(true);
+                  //  document.location(#);
+                // location.href=location.href;
                     // what you want to happen when mouseover and mouseout 
                     // occurs on elements that match '.dosomething'
                 });
@@ -161,7 +197,7 @@ and open the template in the editor.
                     //alert("button clicked"+event.srcElement.id);
                     //alert('terminer');
                     terminer();
-                    document.location.reload(true);
+                   // document.location.reload(true);
 
                     // what you want to happen when mouseover and mouseout 
                     // occurs on elements that match '.dosomething'
