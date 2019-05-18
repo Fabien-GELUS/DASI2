@@ -10,17 +10,23 @@ and open the template in the editor.
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
+        <link href="https://fonts.googleapis.com/css?family=Macondo+Swash+Caps|Poiret+One|Prompt|Quicksand&display=swap" rel="stylesheet">
+        <link rel="stylesheet" href="voyanceStyle.css">
     </head>
     <body>
         <nav>
+            <span>POSIT'IF</span>
             <a href="#">Voyance</a>
             <a href="historique.html">Historique</a>
             <a href="profil.html">Profil</a>
             <a href="index.html" id="link-deconnexion">Deconnexion</a>
         </nav>
         <h1>Choisissez votre medium et decouvrez votre avenir...</h1>
-        <ul id="liste-voyances">
-        </ul>
+        <div class="container">
+            <ul id="liste-voyances">
+                <input value="choisir" class="button-choisir-voyance" type="button" onlick="choisirVoyance()">
+            </ul>
+        </div>
         <script>
             function initialisation() {
 

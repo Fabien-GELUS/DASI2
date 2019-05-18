@@ -12,17 +12,20 @@ and open the template in the editor.
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <link rel="stylesheet" href="ClientActuel.css"/>
-        <link href="https://fonts.googleapis.com/css?family=Macondo+Swash+Caps|Poiret+One" rel="stylesheet"> 
+        <link href="https://fonts.googleapis.com/css?family=Macondo+Swash+Caps|Poiret+One|Prompt|Quicksand&display=swap" rel="stylesheet">
         <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
     </head>
     <body>
         <nav>
+            <span>POSIT'IF</span>
             <a href="#">Client Actuel</a>
             <a href="tableaudebord.html">Tableau de bord</a>
             <a href="index.html" id="link-deconnexion">Deconnexion</a>
         </nav>
         
         <div id="content">
+            <div class="aucuneVoyance"><p>Aucun client ne vous est actuellement assigné...</p><p>Cliquez sur le bouton rafrachir dès que vous aurez reçu un SMS</p></div>
+            <button id="refresh">Rafraichir</button>
         </div>   
         <script>
             function initialisation() {
@@ -94,7 +97,7 @@ and open the template in the editor.
                     }else if(!response.haveDemande.localeCompare("false")){
                         $("#content").empty();
                         $("#content").append(
-                            '<p>Aucun client ne vous est actuellement assigné...</p><p>Cliquez sur le bouton rafrachir dès que vous aurez reçu un SMS</p>'
+                            '<div class="aucuneVoyance"><p>Aucun client ne vous est actuellement assigné...</p><p>Cliquez sur le bouton rafrachir dès que vous aurez reçu un SMS</p></div>'
                         );
                         $("#content").append(
                             '<button id="refresh">Rafraichir</button>'

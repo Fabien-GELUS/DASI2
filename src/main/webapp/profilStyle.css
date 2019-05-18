@@ -29,25 +29,14 @@ h1{
 	font-family: "Prompt",sans-serif;
 	text-align: center;
 }
-.aucuneVoyance{
-	padding-top: 15%;
-	font-family: "Quicksand",sans-serif;
-	line-height: 1.5;
-	font-size: 25px;
+.info{
+	display: inline-block;
+	height: 200px;
+	width: 49%;
+	margin: 0;
+}
+.info p{
 	text-align: center;
-}
-#refresh{
-	display: block;
-	margin:0 auto;
-	color:#4c187c;
-	border: 2px solid #4c187c;
-	font-size: 25px;
-	padding: 10px;
-	background-color: white;
-	border-radius: 5px;
-	font-family: "Prompt",sans-serif;
-}
-#refresh:hover{
-	background-color: #4c187c;
-	color:white;
+	font-family: "Poiret One",cursive;
+	font-size: 175%;
 }

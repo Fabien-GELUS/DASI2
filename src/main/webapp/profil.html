@@ -10,22 +10,34 @@ and open the template in the editor.
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
+        <link rel="stylesheet" href="profilStyle.css">
+        <link href="https://fonts.googleapis.com/css?family=Macondo+Swash+Caps|Prompt|Poiret+One&display=swap" rel="stylesheet"> 
     </head>
     <body>
+        <nav>
+            <span>POSIT'IF</span>
+            <a href="voyance.html">Voyance</a>
+            <a href="historique.html">Historique</a>
+            <a href="#">Profil</a>
+            <a href="index.html" id="link-deconnexion">Deconnexion</a>
+        </nav>
         <h1>Profil astrologique</h1>
-        
-        <div> Signe du Zodiaque </div>
-        <div id="zodiaque">...</div>
-        
-        <div> Signe Chinois </div>
-        <div id="chinois">...</div>
-        
-        <div> Couleur porte-bonheur </div>
-        <div id="couleur">...</div>
-        
-        <div> Animal-totem </div>
-        <div id="animal">...</div>
-        
+        <div class="info">
+            <p> Signe du Zodiaque </p>
+            <div id="zodiaque"></div>
+        </div>
+        <div class="info">
+            <p> Signe Chinois </p>
+            <div id="chinois"></div>
+        </div>
+        <div class="info">
+            <p> Couleur porte-bonheur </p>
+            <div id="couleur"></div>
+        </div>
+        <div class="info">
+            <p> Animal-totem </p>
+            <div id="animal"></div>
+        </div>
         <script>
             function initialisation() {
 
@@ -47,6 +59,7 @@ and open the template in the editor.
                     $('#couleur').html(response.couleur);
                     $('#animal').html(response.animal);
                     
+
 
                 }).fail(function (error) { // Appel KO => erreur a gérer
                     

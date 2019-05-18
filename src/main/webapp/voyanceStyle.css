@@ -26,28 +26,39 @@ nav a:hover{
 	font-weight: 300;
 }
 h1{
-	font-family: "Prompt",sans-serif;
 	text-align: center;
+	font-family: "Prompt",sans-serif;
 }
-.aucuneVoyance{
-	padding-top: 15%;
-	font-family: "Quicksand",sans-serif;
+.container{
+	width: 80%;
+	margin: 0 auto;
+	overflow: scroll;
+	height: 75vh;
+}
+ul li{
+	list-style: none;
+}
+.mediums p{
+	font-family: "quicksand",sans-serif;
+	font-size: 25px;
 	line-height: 1.5;
-	font-size: 25px;
-	text-align: center;
 }
-#refresh{
+.mediums p:first-child{
+	font-family: "Poiret One",cursive;
+	font-size: 35px;
+}
+input{
 	display: block;
-	margin:0 auto;
-	color:#4c187c;
-	border: 2px solid #4c187c;
-	font-size: 25px;
-	padding: 10px;
-	background-color: white;
-	border-radius: 5px;
+	border: none;
 	font-family: "Prompt",sans-serif;
+	font-size: 16px;
+	padding:10px;
+	color:#4c187c;
+	background-color: white;
+	border:1px solid #4c187c;
+	border-radius: 5px;
 }
-#refresh:hover{
+input:hover{
 	background-color: #4c187c;
 	color:white;
 }
