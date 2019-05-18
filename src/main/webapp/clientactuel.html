@@ -23,10 +23,7 @@ and open the template in the editor.
         </nav>
         
         <div id="content">
-        </div>
-        
-       
-        
+        </div>   
         <script>
             function initialisation() {
 
@@ -92,6 +89,8 @@ and open the template in the editor.
                         }else if(response.etape===3){
                              window.location = "compteRendu.html";
                         }
+                        $("#content").append(
+                            '<div><button>Génerer prédiction</button><div class="amour"><p>Amour</p>'+response.predictions.amour+'</div><div class="sante"><p>Sante</p>'+response.predictions.sante+'</div><div class="travail">Amour<div>'+response.predictions.travail+'</div>');
                     }else if(!response.haveDemande.localeCompare("false")){
                         $("#content").empty();
                         $("#content").append(

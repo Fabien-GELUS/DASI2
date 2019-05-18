@@ -7,41 +7,44 @@ and open the template in the editor.
 <html>
     <head>
         <title>Inscription</title>
-        <meta charset="UTF-8">
+        <meta charset="UTF-8" lang="fr">
 
         <!-- Librairie Javascript: jQuery (v3.3.1) -->
         <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
         <link rel="stylesheet" href="InscriptionStyle.css"/>
+        <link href="https://fonts.googleapis.com/css?family=Macondo+Swash+Caps|Poiret+One" rel="stylesheet"> 
     </head>
     <body>
         <div class="intro">
             <div class="inner">
-                <form>
-                    Civilité : <input type="radio" name="civilite" id="civiliteM" value="M"><label for="civiliteM">M</label>
-                    <input type="radio" name="civilite" id="civiliteF" value="F"><label for="civiliteF">F</label>
-                    <input type="radio" name="civilite" id="civiliteA" value="A"><label for="civiliteA">Autre</label><br>
-                    Nom : <input type="text" id="nom" placeholder="Entrer votre nom" /><br>
-                    Prénom : <input type="text" id="prenom" placeholder="Entrer votre prénom" /><br>
-                    <label for="naissance">Naissance:</label>
-                    <input type="date" id="naissance">
-                    <label for="adresse">Adresse : </label>
-                    <input type="text" id="adresse" placeholder="Entrer votre addresse" /><br>
-                    <label for="ville">Ville : </label>
-                    <input type="text" id="ville" placeholder="Entrer votre ville" /><br>
-                    <label for="code">Code Postal :</label>
-                    <input type="text" id="code" placeholder="Entrer votre code postal" /><br>
-                    <label for="numtel">Tel :</label>
-                    <input type="tel" id="numtel" size="10" placeholder="Entrer votre numéro de téléphone" /><br>
-                    <label for="email">Mail :</label>
-                    <input type="email" id="email" pattern="+@+" size="30" required placeholder="Entrer votre mail" /><br>
-                    <label for="userPassword">Mdp :</label>
-                    <input id="userPassword" type="password" required placeholder="Entrer votre mdp"><br>
-                    <label for="confirmedPassword">ConfirmerMdp : </label>
-                    <input id="confirmedPassword" type="password" required placeholder="Confirmer votre mdp"><br>
-                    <input type="checkbox" id="cgu" >
-                    <label for="cgu">Accepter CGU : </label> <br>
-                    <button id="valider">Valider</button> 
-                </form>       
+                <div class="content">
+                    <form>
+                        Civilité : <input type="radio" name="civilite" id="civiliteM" value="M"><label class="radioLabel" for="civiliteM">M</label>
+                        <input type="radio" name="civilite" id="civiliteF" value="F"><label class="radioLabel" for="civiliteF">F</label>
+                        <input type="radio" name="civilite" id="civiliteA" value="A"><label class="radioLabel" for="civiliteA">Autre</label><br>
+                        Nom : <input type="text" id="nom" placeholder="Entrer votre nom" />
+                        Prénom : <input type="text" id="prenom" placeholder="Entrer votre prénom" /><br>
+                        <label for="naissance">Naissance:</label>
+                        <input type="date" id="naissance"><br>
+                        <label for="adresse">Adresse : </label>
+                        <input type="text" id="adresse" placeholder="Entrer votre addresse" /><br>
+                        <label for="ville">Ville : </label>
+                        <input type="text" id="ville" placeholder="Entrer votre ville" />
+                        <label for="code">Code Postal :</label>
+                        <input type="text" id="code" placeholder="Entrer votre code postal" /><br>
+                        <label for="numtel">Tel :</label>
+                        <input type="tel" id="numtel" size="10" placeholder="Entrer votre numéro de téléphone" />
+                        <label for="email">Mail :</label>
+                        <input type="email" id="email" pattern="+@+" size="30" required placeholder="Entrer votre mail" /><br>
+                        <label for="userPassword">Mdp :</label>
+                        <input id="userPassword" type="password" required placeholder="Entrer votre mdp">
+                        <label for="confirmedPassword">ConfirmerMdp : </label>
+                        <input id="confirmedPassword" type="password" required placeholder="Confirmer votre mdp"><br>
+                        <input type="checkbox" id="cgu" >
+                        <label for="cgu">Accepter CGU : </label> <br>
+                        <button id="valider">Valider</button> 
+                    </form>
+                    </div>       
                 <div id="message">...</div>
             </div>
         </div>
