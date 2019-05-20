@@ -9,17 +9,24 @@ and open the template in the editor.
         <title>POSITIF</title>
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link rel="stylesheet" href="tableaudebord.css"/>
+        <link href="https://fonts.googleapis.com/css?family=Macondo+Swash+Caps|Poiret+One|Prompt|Quicksand&display=swap" rel="stylesheet">
         <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
+        <script src="https://canvasjs.com/assets/script/canvasjs.min.js"></script>
     </head>
     <body>
         <nav>
+            <span>POSIT'IF</span>
             <a href="clientactuel.html">Client Actuel</a>
             <a href="#">Tableau de bord</a>
             <a href="index.html" id="link-deconnexion">Deconnexion</a>
         </nav>
         <h1>Tableau de bord</h1>
-        <ul id="diagrammes">
-        </ul>
+        <div id="diagrammeMedium">
+        </div>
+        <div id="diagrammeEmploye">
+        </div>
+        
         <script>
             function initialisation() {
                 // Requête AJAX
@@ -34,6 +41,7 @@ and open the template in the editor.
                     // ici votre code...
                     console.log("initialisation");
                     console.log(response);
+                    /*
                     $("#diagrammes").empty();
                     $.each(response.mediums, function (i, medium) {
                         $("#diagrammes").append('<li><div class="medium"><p>' + medium.nom + '</p><p>');
@@ -43,6 +51,47 @@ and open the template in the editor.
                         $("#diagrammes").append('<li><div class="medium"><p>' + employe.nom + '</p><p>');
                         $("#diagrammes").append('</p><p>' + employe.nombreclient+ '</p></div></li>');
                     });
+                    */
+                   let nbvoyancemedium = [];
+                    for (let i=0; i<response.mediums.length; i++){
+                        nbvoyancemedium.push({y:response.mediums[i].nombrevoyance, label:response.mediums[i].nom});
+                    }
+                    let chartMedium = new CanvasJS.Chart("diagrammeMedium", {
+                        axisY: {
+                            title: "Nombre de voyances"
+                        },
+                        axisX: {
+                            title: "Médium"
+                        },
+                        data: [              
+                            {
+                                type: "bar",
+                                dataPoints: nbvoyancemedium
+                            }
+                            ]
+                        });
+                    chartMedium.render();
+                    
+                    let nbclientemploye = [];
+                    for (let i=0; i<response.employes.length; i++){
+                        nbclientemploye.push({y:response.employes[i].nombreclient, label:response.employes[i].nom});
+                    }
+                    let chartEmploye = new CanvasJS.Chart("diagrammeEmploye", {
+                        axisY: {
+                            title: "Nombre de clients"
+                        },
+                        axisX: {
+                            title: "Employé"
+                        },
+                        data: [              
+                            {
+                                type: "bar",
+                                dataPoints: nbclientemploye
+                            }
+                            ]
+                        });
+                    chartEmploye.render();
+                    
                 }).fail(function (error) { // Appel KO => erreur a gérer
                     // Popup avec message d'erreur :
                     alert('Erreur lors de l\'appel: HTTP Code ' + error.status + ' ~ ' + error.statusText + ' ~ ' + error.getResponseHeader('Content-Type'));

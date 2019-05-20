@@ -25,7 +25,7 @@ and open the template in the editor.
         
         <div id="content">
             <div class="aucuneVoyance"><p>Aucun client ne vous est actuellement assigné...</p><p>Cliquez sur le bouton rafrachir dès que vous aurez reçu un SMS</p></div>
-            <button id="refresh">Rafraichir</button>
+            <button id="refresh" onClick="window.location.href=window.location.href">Rafraichir</button>
         </div>   
         <script>
             function initialisation() {
@@ -48,59 +48,60 @@ and open the template in the editor.
                     $("#content").empty();
                         if (!response.medium.type.localeCompare("Voyant")) {
                             $("#content").append(
-                                    '<div class="medium"><h1>Vous incarnez...</h1><p>' + response.medium.nom + '</p><p>' + '○ ' + response.medium.type + ' ■ Spécialité: ' + response.medium.specialite);
+                                    '<div class="medium"><h1>Vous incarnez...</h1><img src="img/L.png" alt="My test image"><p><b>' + response.medium.nom + '</b></p><p>' + '○ ' + response.medium.type + ' ☐ Spécialité: ' + response.medium.specialite);
                         } else if (!response.medium.type.localeCompare("Astrologue")) {
                             $("#content").append(
-                                    '<div class="medium"><h1>Vous incarnez...</h1><p>' + response.medium.nom + '</p><p>' + '○ ' + response.medium.type + ' ■ ' + response.medium.formation + ' ▲ promo ' + response.medium.promotion);
+                                    '<div class="medium"><h1>Vous incarnez...</h1><img src="img/L.png" alt="My test image"><p><b>' + response.medium.nom + '</b></p><p>' + '○ ' + response.medium.type + ' ☐ ' + response.medium.formation + ' △ promo ' + response.medium.promotion);
                         } else {
                             $("#content").append(
-                                    '<div class="medium"><h1>Vous incarnez...</h1><p>' + response.medium.nom + '</p><p>' + '○ ' + response.medium.type);
+                                    '<div class="medium"><h1>Vous incarnez...</h1><img src="img/L.png" alt="My test image"><p><b>' + response.medium.nom + '</b></p><p>' + '○ ' + response.medium.type);
                         }
                         $("#content").append('</p><p>' + response.medium.descriptif + '</p></div>');
                         $("#content").append(
-                                '<div class="client"><h1>Profil du client</h1><div class="box" id="box1"><ul><li>Civilité:'+response.client.Civilite+'</li><li>Nom:'+response.client.Nom+'</li><li>Prénom:'+response.client.Prenom+'</l1><li>Naissance:'+response.client.Naissance+'</li></ul></div><div class="box" id="box2"><ul><li>Signe du zodiaque:'+response.client.signeZodiaque+'</li><li>Signe chinois:'+response.client.signeChinois+'</li><li>Couleur porte-bonheur:'+response.client.couleur+'</li><li>Animal-totem:'+response.client.animal+'</li></ul>');
+                                '<div class="client"><h1>Profil du client</h1><div class="box" id="box1"><ul><li>Civilité : '+response.client.Civilite+'</li><li>Nom : '+response.client.Nom+'</li><li>Prénom : '+response.client.Prenom+'</l1><li>Naissance : '+response.client.Naissance+'</li></ul></div><div class="box" id="box2"><ul><li>Signe du zodiaque : '+response.client.signeZodiaque+'</li><li>Signe chinois:'+response.client.signeChinois+'</li><li>Couleur porte-bonheur : '+response.client.couleur+'</li><li>Animal-totem : '+response.client.animal+'</li></ul></div></div>');
                        
                         $("#content").append(
-                            '<h1>Historique du client</h1><nav><ul id="liste-demandes"></ul></nav>');
+                            '<p><h1>Historique du client</h1></p><histo><ul id="liste-demandes"></ul></histo>');
 
                         $.each(response.historique,function(i,demande){
-                        $("#liste-demandes").append(
-                                '<li><div id="demande"><p>'+demande.datedebut+'</p><p>'+demande.nom+'</p>');
+                      //  $("#liste-demandes").append(
+                      //          '<img src="img/L.png" alt="My test image"><li><div id="demande"><p>'+demande.datedebut+'</p><p><b>'+demande.nom+'</b></p>');
                         if(demande.statut){
                             $("#liste-demandes").append(
-                                '<p>'+'✓ Demande acceptée'+'</p>');
+                                '<img src="img/L.png" alt="My test image"><li><div id="demande"><p>'+demande.datedebut+'</p><p><b>'+demande.nom+'</b></p>'+ '<p>'+'✓ Demande acceptée'+'</p>'+'</div></li>');
                         }else{
                             $("#liste-demandes").append(
-                                '<p>'+'✗ Medium indisponible'+'</p>');
+                                 '<img src="img/L.png" alt="My test image"><li><div id="demande"><p>'+demande.datedebut+'</p><p><b>'+demande.nom+'</b></p>'+'<p>'+'✗ Medium indisponible'+'</p>'+'</div></li>');
                         }
                         if($.trim(demande.datefin)){ // if not null
                              $("#liste-demandes").append(
-                                '<p> Fin échange: '+demande.datefin+'</p>');
+                                '<div id="demande"><p> Fin échange: '+demande.datefin+'</p></div>');
                         }
                         if($.trim(demande.commentaire)){
                             $("#liste-demandes").append(
-                                    '<p>'+'Commentaire : '+demande.commentaire+'</p>');
+                                    '<div id="demande"><p>'+'Commentaire : '+demande.commentaire+'</p></div>');
                         }
+                        
                         $("#liste-demandes").append( 
                             '</div></li>');
                         });
                         
                         if(response.etape===1){
-                            $("#content").append('<button class="btn" id="commencer" onClick="window.location.href=window.location.href">commencer</button>');
+                            $("#content").append('<button class="btn1" id="commencer" onClick="window.location.href=window.location.href">Commencer</button>');
                         }else if(response.etape===2){
-                            $("#content").append('<button class="btn" id="terminer" onClick="window.location.href=window.location.href">terminer</button>');
+                            $("#content").append('<button class="btn2" id="terminer" onClick="window.location.href=window.location.href">Terminer</button>');
                         }else if(response.etape===3){
                              window.location = "compteRendu.html";
                         }
                         $("#content").append(
-                            '<div><button>Génerer prédiction</button><div class="amour"><p>Amour</p>'+response.predictions.amour+'</div><div class="sante"><p>Sante</p>'+response.predictions.sante+'</div><div class="travail">Amour<div>'+response.predictions.travail+'</div>');
+                            '<div class="box" id="box3"><button class="btn3" onClick="window.location.href=window.location.href">Génerer prédiction</button><div class="amour"><p>Amour:</p><p>'+response.predictions[0].texte+'</p></div><div class="sante"><p>Sante:</p><p>'+response.predictions[1].texte+'</p></div><div class="travail"><p>Travail:</p><p>'+response.predictions[2].texte+'</p></div></div>');
                     }else if(!response.haveDemande.localeCompare("false")){
                         $("#content").empty();
                         $("#content").append(
                             '<div class="aucuneVoyance"><p>Aucun client ne vous est actuellement assigné...</p><p>Cliquez sur le bouton rafrachir dès que vous aurez reçu un SMS</p></div>'
                         );
                         $("#content").append(
-                            '<button id="refresh">Rafraichir</button>'
+                            '<button id="refresh" onClick="window.location.href=window.location.href">Rafraichir</button>'
                         );
                 
                     }

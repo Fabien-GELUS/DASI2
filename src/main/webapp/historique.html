@@ -46,7 +46,7 @@ and open the template in the editor.
                     $("#liste-demandes").empty();
                     $.each(response.demandes,function(i,demande){
                         $("#liste-demandes").append(
-                                '<li><div id="demande"><p>'+demande.datedebut+'</p><p>'+demande.nom+'</p>');
+                                '<li><img src="img/L.png" alt="My test image"><div id="demande"><p>'+demande.datedebut+'</p><p>'+demande.nom+'</p>');
                         if(demande.statut){
                             $("#liste-demandes").append(
                                 '<p>'+'✓ Demande acceptée'+'</p>');
@@ -56,7 +56,7 @@ and open the template in the editor.
                         }
                         if($.trim(demande.datefin)){ //if datefin is not null
                              $("#liste-demandes").append(
-                                '<p> Fin échange: '+demande.datefin+'</p>');
+                                '<div id="demande"><p> Fin échange: '+demande.datefin+'</p>');
                         }
                         $("#liste-demandes").append( 
                             '</div></li>');

@@ -84,11 +84,10 @@ private final static SimpleDateFormat HORODATE_FORMAT = new SimpleDateFormat("dd
             jsonContainer.add("historique",jsonArrayDemandes);
 
             JsonArray jsonArrayPrediction=new JsonArray();
-            String[] libelle = {"Amour","Santé","Travail"};
             for(int i=0;i<3;i++)
             {
                 JsonObject jsonPrediction=new JsonObject();
-                jsonPrediction.addProperty(libelle[i], predictions.get(i));
+                jsonPrediction.addProperty("texte", predictions.get(i));
                 jsonArrayPrediction.add(jsonPrediction);
             }
             jsonContainer.add("predictions",jsonArrayPrediction);

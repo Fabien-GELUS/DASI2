@@ -25,6 +25,7 @@ import webapp.action.Action;
 import webapp.action.ChoisirVoyanceAction;
 import webapp.action.ClientActuelAction;
 import webapp.action.CommencerSeanceAction;
+import webapp.action.CompteRenduAction;
 import webapp.action.ListeDemandeAction;
 import webapp.action.ListeMediumAction;
 import webapp.action.ProfilAction;
@@ -33,6 +34,7 @@ import webapp.action.TerminerSeanceAction;
 import webapp.serialisation.ChoisirVoyanceSerialisation;
 import webapp.serialisation.ClientActuelSerialisation;
 import webapp.serialisation.CommencerSeanceSerialisation;
+import webapp.serialisation.CompteRenduSerialisation;
 import webapp.serialisation.ListeDemandeSerialisation;
 import webapp.serialisation.ListeMediumSerialisation;
 import webapp.serialisation.ProfilSerialisation;
@@ -232,6 +234,13 @@ public class ActionServlet extends HttpServlet {
                             request.setAttribute("idEmploye",id);
                             action=new TerminerSeanceAction();
                             serialisation=new TerminerSeanceSerialisation();
+                            break;
+                        case "compterendu":
+                            System.out.println("todo : compterendu");
+                            id=(Long) session.getAttribute("idEmploye");
+                            request.setAttribute("idEmploye",id);
+                            action=new CompteRenduAction();
+                            serialisation=new CompteRenduSerialisation();
                             break;
                     }
                     
